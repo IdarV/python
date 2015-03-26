@@ -16,7 +16,7 @@ def komplett_spider(max_pages, thread_name):
     page = 1
     while page <= max_pages:
         url = "https://www.komplett.no/k/kc.aspx?bn=" + str(get_page_nr())
-        print(thread_name + 'Visiting ' + url)
+        print(thread_name + ' visiting ' + url)
         data = requests.get(url)
         plain_text = data.text
 
@@ -41,7 +41,6 @@ def get_page_nr():
     global page_nr
     page_nr += 1
     a = page_nr
-    print(str(a) + 'visited by' + threading.current_thread().name)
     lock.release()
     return a
 
@@ -59,13 +58,15 @@ def write_to_file(item_list):
 
 
 def start_threads():
+    number_of_visits = 100;
+    target_method = komplett_spider
     try:
         # Set threads
-        t1 = threading.Thread(target=komplett_spider, args=(100, 't1'))
-        t2 = threading.Thread(target=komplett_spider, args=(100, 't2'))
-        t3 = threading.Thread(target=komplett_spider, args=(100, 't3'))
-        t4 = threading.Thread(target=komplett_spider, args=(100, 't4'))
-        t5 = threading.Thread(target=komplett_spider, args=(100, 't5'))
+        t1 = threading.Thread(target=target_method, args=(number_of_visits, 't1'))
+        t2 = threading.Thread(target=target_method, args=(number_of_visits, 't2'))
+        t3 = threading.Thread(target=target_method, args=(number_of_visits, 't3'))
+        t4 = threading.Thread(target=target_method, args=(number_of_visits, 't4'))
+        t5 = threading.Thread(target=target_method, args=(number_of_visits, 't5'))
         # Make threads daemon
         t1.daemon = False
         t2.daemon = False
