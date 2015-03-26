@@ -2,13 +2,12 @@ __author__ = 'idar'
 import requests
 import threading
 from bs4 import BeautifulSoup
-#TODO: get price?
 
 lock = threading.Lock()
 lock_list = threading.Lock()
-items = set() #standard set
-page_nr = 10087 #starting page nr, i.e. #10087 is RAM-page
-update = 1
+items = set()
+page_nr = 1000
+# update = 1
 
 
 def komplett_spider(max_pages, thread_name):
@@ -23,6 +22,7 @@ def komplett_spider(max_pages, thread_name):
         soup = BeautifulSoup(plain_text)
         for link in soup.findAll('h3'):
             name = str(link.get('title'))
+            # Why is this counter intuitive?
             if name.find("None"):
                 add_to_list(name)
         page += 1
@@ -58,44 +58,27 @@ def write_to_file(item_list):
 
 
 def start_threads():
-    number_of_visits = 100;
+    number_of_threads = 3
+    number_of_visits = 5
     target_method = komplett_spider
+    threads = []
+    for x in range(0, number_of_threads):
+        threads.append(threading.Thread(target=target_method, args=(number_of_visits, ('t' + str(x)))))
     try:
-        # Set threads
-        t1 = threading.Thread(target=target_method, args=(number_of_visits, 't1'))
-        t2 = threading.Thread(target=target_method, args=(number_of_visits, 't2'))
-        t3 = threading.Thread(target=target_method, args=(number_of_visits, 't3'))
-        t4 = threading.Thread(target=target_method, args=(number_of_visits, 't4'))
-        t5 = threading.Thread(target=target_method, args=(number_of_visits, 't5'))
-        # Make threads daemon
-        t1.daemon = False
-        t2.daemon = False
-        t3.daemon = False
-        t4.daemon = False
-        t5.daemon = False
-        # Start threads
-        t1.start()
-        t2.start()
-        t3.start()
-        t4.start()
-        t5.start()
-        # Join threads to main thread
-        t1.join()
-        t2.join()
-        t3.join()
-        t4.join()
-        t5.join()
-
-
-        print('Writing to file..')
-        write_to_file(items)
-        print("done")
+        for thr in threads:
+            thr.daemon = False
+            thr.start()
+        for thr in threads:
+            thr.join()
     except:
         print('Error: unable to start thread')
+
+    print('Writing to file..')
+    write_to_file(items)
+    print("done")
 
 
 ####################################
 ########## Program start ###########
 ####################################
-
 start_threads()
