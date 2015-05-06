@@ -17,8 +17,9 @@ def vg_crawler():
         # Strip name for newlines
         name = str(title.get_text()).rstrip()
         if re.search('[a-zA-Z]', name):
-            # Remove all non-letters and unnecessary whitespaces, print and increase index
+            # Remove all non-letters and unnecessary whitespaces
             name = " ".join(re.sub(r'[^\w]', ' ', name).split())
+            # Print and increase index
             print(str(index) + ') ' + name + '\n')
             index += 1
 
