@@ -18,9 +18,6 @@ PORT = 6667
 
 NICK = "whatbotw"
 PASS = "oauth:4gpejukvczmf8yp4nqsyi3s13pe4xa"  # Throwaway account
-IDENT = "whatbotw"
-REALNAME = "whatbotw"
-MASTER = "ido"
 
 readbuffer = ""
 print("#Connecting")
@@ -35,10 +32,10 @@ s.send(bytes("JOIN #sodapoppin\r\n", "UTF-8"))
 
 while 1:
     readbuffer = readbuffer + s.recv(1024).decode("UTF-8")
-    temp = str.split(readbuffer, "\n")
-    readbuffer = temp.pop()
+    incoming_msg = str.split(readbuffer, "\n")
+    readbuffer = incoming_msg.pop()
 
-    for line in temp:
+    for line in incoming_msg:
         line = str.rstrip(line)
         line = str.split(line)
 
@@ -58,3 +55,5 @@ while 1:
                 message += line[i] + " "
                 i += 1
             print(find_between(line[0], ":", "!") + " : " + message[1:])
+            # Print whole message if no connection:
+            # print(message)
