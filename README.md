@@ -2,7 +2,9 @@
 Contains small python projects. They should be fairly easy to run.
 
 ## twitch_chat
-Lets you connect to a twitch IRC channel and set up automated answers.
+Connects to a www.twitch.tv chat
+
+Lets you connect to a Twitch IRC channel and set up automated answers.
 
 This example is responding to ```!norway``` with the local time;
 ```!norway ```=> ```23:55:59```
