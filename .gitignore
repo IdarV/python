@@ -8,8 +8,13 @@ __pycache__/
 # C extensions
 *.so
 
-#.idea
+# all .idea files
 *.idea
+
+# ignore env variables
+/twitch_chat/environment.yml
+
+
 
 # Distribution / packaging
 .Python
