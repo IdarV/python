@@ -1,0 +1,13 @@
+# Create /twitch_chat/environment.yml
+
+## FOR TWITCH ##
+  # Twitch IRC : http://help.twitch.tv/customer/portal/articles/1302780-twitch-irc
+  # Twitch password generator: http://www.twitchapps.com/tmi/
+
+# Include HOST, PORT, NICK and PASS
+# Example:
+
+HOST: "irc.myhost.com"
+PORT: 6667
+NICK: "mynick"
+PASS: "mypassw0rd"
